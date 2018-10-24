@@ -123,10 +123,10 @@ Run script manually for the first time, check console log for errors:
 `node getJuice.js`
 
 Get your pi's IP address, record the IP address from the following command:    
-`ifconfig`
+`hostname -I`
 
 Start up express server (if you didn't use pm2 to persistantly run):  
 `node server.js`
 
-Open a browser on another computer/mobile device connected to the same network using the IP address you got from `ifconfig` command:
+Open a browser on another computer/mobile device connected to the same network using the IP address found above as the URL:
 `http://192.168.1.189`
