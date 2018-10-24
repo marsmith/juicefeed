@@ -89,12 +89,14 @@ set database root user password.  replace 'abc123' below:
 clone from github:  
 `git clone https://github.com/marsmith/juicefeed`
 
-install npm dependencies:  
-`cd juicefeed`
+enter project folder:  
+`cd juicefeed`   
+
+install npm dependencies:   
 `npm install`
 
 Edit config file and replace juice venue values as needed.  This will configure your custom version of the juicefeed to suit your needs:  
-`nano juicefeed/config.js`
+`nano config.js`
 
 setup up cron jobs.  cron is a special file that will execute tasks at a predefined interval.  
 `crontab -e`
@@ -115,3 +117,16 @@ start pm2 (replace 'alice' with your username/home directory):
 `pm2 start alice/node-juicedb/server.js`  
 `pm2 startup`  
 `sudo env PATH=$PATH:/opt/nodejs/bin /opt/nodejs/lib/node_modules/pm2/bin/pm2 startup systemd -u alice --hp /home/alice`  
+
+### Test your new juicefeed server  
+Run script manually for the first time, check console log for errors:  
+`node getJuice.js`
+
+Get your pi's IP address, record the IP address from the following command:    
+`ifconfig`
+
+Start up express server (if you didn't use pm2 to persistantly run):  
+`node server.js`
+
+Open a browser on another computer/mobile device connected to the same network using the IP address you got from `ifconfig` command:
+`http://192.168.1.189`
