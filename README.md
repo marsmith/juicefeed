@@ -95,7 +95,7 @@ enter project folder:
 install npm dependencies:   
 `npm install`
 
-Edit config file and replace juice venue values as needed.  This will configure your custom version of the juicefeed to suit your needs:  
+Edit config file and replace juice venue values as needed.  This will configure your custom version of the juicefeed to suit your needs.
 `nano config.js`
 
 setup up cron jobs.  cron is a special file that will execute tasks at a predefined interval.  
