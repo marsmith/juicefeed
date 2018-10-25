@@ -65,10 +65,10 @@ Get your pi's IP address, record the IP address from the following command:
 
 ## Use SSH for remaining configuration steps
 
-### Create a new user
-
 Using your SSH client, enter the IP address found above to connect to your Pi:  
 `ssh pi@192.168.1.195`
+
+### Create a new user
 
 Add a new user, and delete default 'pi' user:  
  `sudo adduser hawdis`
