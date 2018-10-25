@@ -1,48 +1,51 @@
+
 # juicefeed
 
-The following info is a guide to setting up a basic node.js/express web server on a raspberry pi.  A database will be created and populated with juice data from a cron script run every 15 minutes.  Additionally, an express server will be installed that hosts a static web page (Juice Feed) which queries the aforementioned database for juice infos and displays chronologically sorted, filterable info cards.
+The following info is a guide to setting up a basic node.js/express web server on a raspberry pi.  A database will be created and populated with juice info from a cron script run every 15 minutes.  Additionally, an express server will be installed that hosts a static web page (Juice Feed) which queries the aforementioned database for juice infos and displays chronologically sorted, filterable juice info cards.
 
 ![Screen Shot](https://image.ibb.co/nqrZOA/Capture.png)
 
 ## Requirements
 
-- **Hardware**: (raspberry pi microSD card, micro USB power supply, HDMI cable, monitor, keyboard).  Monitor and keyboard only necessary for initial setup.
-- **Software**: Rasbian OS image (tesed using **June 2018** release) [here](https://www.raspberrypi.org/downloads/raspbian/)
+  **Hardware** (Monitor and keyboard only necessary for initial setup):  
+  - raspberry pi microSD card  
+  - micro USB power supply  
+  - HDMI cable  
+  - monitor  
+  - keyboard  
+
+
+  **Software**: 
+  - Rasbian OS image (tesed using **June 2018** release) [here](https://www.raspberrypi.org/downloads/raspbian/)
+  - Raspberry Pi image flashing software Etcher [here](https://etcher.io)
+  - Putty SSH Client (optional) [here](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 
 ## Install raspbian
 
 Follow steps from raspbian installation guide [here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
-- Download appropriate raspbian image
-- Download and install Etcher.io
-- Flash image to microSD card
+- Flash image to microSD card using Etcher.io
 - Insert microSD card into pi and plug in
 
 ## Configure raspbian
 
-Once you have successfully installed the OS, log in with default user credentials: user `pi` password `raspberry`
+Once the pi has booted, log in using: user `pi` password `raspberry`
 
 Run `sudo raspi-config` to run raspberry pi config wizard:
 
-- enable wifi network [optional] (network options)
+- setup and enable wifi [optional] (network options)
 - enable SSH for remote access (interface options)
 - set keyboard layout (localization options)
 - set timezone (localization options)
-- change default password 
+- require user to log in (boot options/ Desktop/CLI)
 
-**Wireless config**:
-edit wireless setup file with `sudo nano /etc/network/interfaces` and add this to the bottom:
+**Wireless config**:  
+Use `raspi-config` tool network options
 
-```
-allow-hotplug wlan0
-iface wlan0 inet manual
-    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
-```
-
-**Wired config (using DHCP)**: 
+**Wired config (using DHCP)**:  
 Shouldn't have to do anything
 
-**Wired config (static IP)**:
+**Wired config (static IP)**:  
 edit IP configuration file: `sudo nano /etc/dhcpcd.conf` add the following to the bottom of the file (ensure the static IP being set is not already in use on the network).
 
 ```
@@ -54,28 +57,48 @@ static routers=192.168.50.1
 static domain_name_servers=192.168.50.1
 ```
 
-**reboot after any networking change:**  
+Reboot necessary after any network configuration change:  
+`sudo reboot` 
+
+Get your pi's IP address, record the IP address from the following command:    
+`hostname -I`
+
+## Use SSH for remaining configuration steps
+
+### Create a new user
+
+Using your SSH client, enter the IP address found above to connect to your Pi:  
+`ssh pi@192.168.1.195`
+
+Add a new user, and delete default 'pi' user:  
+ `sudo adduser hawdis`
+
+To make new user part of the sudo group:  
+`sudo adduser hawdis sudo`  
+
+Reboot:  
 `sudo reboot`
 
-Additional security measures (optional but recommended):
-- Update all software: `sudo apt-get update` then `sudo apt-get upgrade`.
-- Add a new user, and delete default 'pi' user: `sudo adduser hawdis`.
-- To make new user part of the sudo group: `sudo adduser hawdis sudo`.
-- switch to new user `su hawdis`  
-- Delete 'pi' user: `sudo deluser pi`.
-- Install firewall: `sudo apt-get install ufw`.
-- Enable firewall: `sudo ufw enable`.
-- Allow access to ports: `sudo ufw allow 8080`.
-- Reboot: `sudo reboot`.
+Your SSH session will disconnect.  Wait a minute or two and login with Putty again as your new user:  
+`ssh hawdis@192.168.1.195`
 
-## Download and setup software
+Delete 'pi' user:  
+`sudo deluser --remove-home pi`  
 
 ### Install system wide app dependencies
-To get the latest package lists using the package manager (unless already done above):  
-`sudo apt-get update` then `sudo apt-get upgrade`.  
 
-Install required software:  
-`sudo apt-get install -y git mariadb-server`
+Update rasbian:  
+`sudo apt-get update` then `sudo apt-get upgrade`
+
+get required software from package manager:  
+`sudo apt-get install -y git mariadb-server ufw`
+
+Allow access to ports:  
+`sudo ufw allow 8080`  
+`sudo ufw allow 22`  
+
+Enable firewall:  
+`sudo ufw enable`  
 
 Install latest node.js for your version of raspberry pi:  
 `wget -O - https://raw.githubusercontent.com/audstanley/NodeJs-Raspberry-Pi/master/Install-Node.sh | sudo bash`
@@ -84,17 +107,20 @@ Install latest node.js for your version of raspberry pi:
 create new database user and set password.  This needs to be done using 'root':   
 `sudo mysql -u root`  
 
-you are now at the mysql prompt.  Now create the user and grant all privileges (replace username and password):  
-```GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' IDENTIFIED BY 'password';``` 
+you are now at the mysql prompt.  Now create the user and grant all privileges (replace 'hawdis' and 'abc123'):  
+```GRANT ALL PRIVILEGES ON *.* TO 'hawdis'@'localhost' IDENTIFIED BY 'abc123';``` 
 
 quit mysql:  
 `\q`  
 
 log back in as your new user:  
-```mysql -u username -p```  
+```mysql -u hawdis -p```  
 
 create new database:  
 ```CREATE DATABASE juicedb;```  
+
+quit mysql:  
+`\q`  
 
 ### install and configure juicefeed app 
 clone from github:  
@@ -124,14 +150,11 @@ The entry below will run the 'getJuice.js' node script every 15 minutes to pull 
 Run script manually for the first time, check console log for errors:  
 `node getJuice.js`
 
-Get your pi's IP address, record the IP address from the following command:    
-`hostname -I`
-
-Start up express server (if you didn't use pm2 to persistantly run):  
+Start up express server (stays running until CTRL-C):  
 `node server.js`
 
 Open a browser on another computer/mobile device connected to the same network using the IP address found above as the URL ie.:
-`http://192.168.1.189`
+`http://192.168.1.195:8080`
 
 ### Persistently start and keep the node/express server script running (optional):
 install pm2:  
@@ -141,6 +164,6 @@ create symlink for pm2 to enable user run:
 `sudo ln -s /opt/nodejs/bin/pm2 /usr/bin/pm2`
 
 start pm2 (replace 'hawdis' with your username/home directory):  
-`pm2 start hawdis/node-juicedb/server.js`  
+`pm2 start /home/hawdis/juicefeed/server.js`  
 `pm2 startup`  
 `sudo env PATH=$PATH:/opt/nodejs/bin /opt/nodejs/lib/node_modules/pm2/bin/pm2 startup systemd -u hawdis --hp /home/hawdis`  
