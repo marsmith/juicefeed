@@ -1,8 +1,8 @@
-var express    = require("express");
+var express    = require('express');
 var app        = express();
 var mysql      = require('mysql');
 var async      = require('async');
-var bodyParser = require("body-parser");
+var bodyParser = require('body-parser');
 var dbInfo     = require('./dbInfo.js');
 
 // Constants
@@ -25,11 +25,15 @@ app.use(express.static(__dirname + '/www'));
 
 //forward paths from route
 app.get('/', (req, res) => {
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log('Serving juicefeed page to this IP:',ip);
     res.sendFile('index.html');
+    
 });
 
 // Retrieve all juicefeed infos
 app.get('/juice', function (req, res) {
+    console.log('i recievied a get request in server.js = /juice'); 
 	var pool = mysql.createPool(dbInfo.data);
     var untappdQuery = "SELECT * FROM untappd WHERE beertime > NOW() - INTERVAL 14 DAY";
 	var instagramQuery = "SELECT * FROM instagram WHERE beertime > NOW() - INTERVAL 3 DAY";
