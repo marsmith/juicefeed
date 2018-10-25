@@ -143,7 +143,7 @@ setup up cron jobs.  cron is a special file that will execute tasks at a predefi
 
 The entry below will run the 'getJuice.js' node script every 15 minutes to pull new juice data.  Enter this on an empty line, where 'hawdis' is your username/home directory:  
 ```
-*/15 * * * * /usr/bin/node hawdis/juicefeed/getJuice.js
+*/15 * * * * /usr/bin/node /home/hawdis/juicefeed/getJuice.js
 ```
 
 ### Test your new juicefeed server  
