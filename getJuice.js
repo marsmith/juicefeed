@@ -143,11 +143,11 @@ var getUntappdMenu = function(venue) {
                 
                 //check for beers that dont have a number in first 3 characters
                 if ($beerDetailsH5.find('a').text().substring(0, 3).indexOf('.') != -1 && !isNaN($beerDetailsH5.find('a').text().charAt(0))) {
-                    beerInfo.name = $beerDetailsH5.find('a').text().split('.')[1].trim().replace("'","");
+                    beerInfo.name = $beerDetailsH5.find('a').text().split('.')[1].trim().replace(/'/g, "''");
                     beerInfo.index = parseInt($beerDetailsH5.find('a').text().split('.')[0]);
                 }
                 else {
-                    beerInfo.name = $beerDetailsH5.find('a').text().trim().replace("'","");
+                    beerInfo.name = $beerDetailsH5.find('a').text().trim().replace(/'/g, "''");
                     beerInfo.index = 0;
                 }
 
