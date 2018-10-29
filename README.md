@@ -147,8 +147,8 @@ The entry below will run the 'getJuice.js' node script every 15 minutes to pull 
 ```
 
 ### Test your new juicefeed server  
-Run script manually for the first time, check console log for errors:  
-`node getJuice.js`
+Run script manually for the first time at debug log level, check console log for errors:  
+`node getJuice.js debug`
 
 Start up express server (stays running until CTRL-C):  
 `node server.js`
