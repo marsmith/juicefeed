@@ -19,6 +19,10 @@ var numInstagramPosts = 5;
 var numTweets = 10;
 var dataExp = /window\._sharedData\s?=\s?({.+);<\/script>/;
 var daysToExpire = 14;
+var twitterCount = 0;
+var untappdVenueCount = 0;
+var untappdUserCount = 0;
+var instagramCount = 0;
 
 var args = process.argv.slice(2);
 var logLevel = args[0] || 'info';
@@ -770,8 +774,6 @@ function formatDate(d) {
 //Instagram
 cleanupInstagram().then(function(result){
     logger.info(result.result);
-    var instagramCount = 0;
-
     logger.info('Starting instagram processing...');
 
     if (config.instagramUsers) config.instagramUsers.forEach(function (item) {
@@ -788,9 +790,6 @@ cleanupInstagram().then(function(result){
 //Untappd
 cleanupUntappd().then(function(result){
     logger.info(result.result);
-    var untappdVenueCount = 0;
-    var untappdUserCount = 0;
-
     logger.info('Starting untappd processing...');
 
     if (config.untappdVenues) config.untappdVenues.forEach(function (item) {
@@ -817,8 +816,6 @@ cleanupUntappd().then(function(result){
 //Twitter
 cleanupTwitter().then(function(result){
     logger.info(result.result);
-    var twitterCount = 0;
-
     logger.info('Starting twitter processing...');
 
     if (config.twitterUsers) config.twitterUsers.forEach(function (item) {
