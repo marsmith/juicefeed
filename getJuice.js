@@ -176,13 +176,13 @@ var getUntappdMenu = function(venue) {
 
                 if (!alreadyHave) beerInfos.push(beerInfo);
 
-                //logger.debug("BEER INDEX:",beerInfo.index,beerInfo.name)
+                //logger.debug("BEER INDEX:" + beerInfo.index + beerInfo.name)
 
             }).then(function(){
                 //logger.debug('Found ' + beerInfos.length + ' items for ' + beerInfos[0].venueNameFull);
         
                 async.each(beerInfos, function (beerInfo, callback) {
-                    //logger.debug('beerInfo:', beerInfo)
+                    //logger.debug('beerInfo: ' +  beerInfo)
                         
                     //only do this if this beer has an index
                     if (beerInfo.index != 0) {
@@ -228,7 +228,7 @@ var getUntappdMenu = function(venue) {
                     
                                         var updateBeerSQL = "UPDATE `" + untappdTableName  + "` SET beertime='" + beerInfo.beertime + "',idx='" + beerInfo.index + "',name='" + beerInfo.name + "',brewery='" + beerInfo.brewery + "',style='" + beerInfo.style + "',ABV='" + beerInfo.ABV + "',IBU='" + beerInfo.IBU + "',rating='" + beerInfo.rating + "',prices='" + beerInfo.prices + "',beerLogoURL='" + beerInfo.beerLogoURL + "',beerUntappdURL='" + beerInfo.beerUntappdURL + "' WHERE idx='" + beerInfo.index + "' AND venue='" + beerInfo.venueNameFull + "'";
                     
-                                        //logger.debug('SQL: ', updateBeerSQL);
+                                        //logger.debug('SQL: ' +  updateBeerSQL);
     
                                         connection.query(updateBeerSQL, function(err, rows, fields){
                                             if(!err){
@@ -388,7 +388,7 @@ var getUntappdUser = function(user) {
                 $(beer).find('.checkin').find('.top').find('p').find('a').each(function(i,item) {
                     checkinData.push($(item).text());
                 });
-                //logger.debug('checkin:',checkinData)
+                //logger.debug('checkin:' + checkinData)
                 beerInfo.name = checkinData[1].trim().replace("'","");
                 beerInfo.brewery = checkinData[2].trim().replace("'","");
                 beerInfo.index = 0;
@@ -430,7 +430,7 @@ var getUntappdUser = function(user) {
                                     if (beerInfo.IBU === 'No') beerInfo.IBU = 'N/A';
                                     beerInfo.style = $('.top').find('.name').find('.style').text();
 
-                                    //logger.debug('DATE',beerInfo.beertime)
+                                    //logger.debug('DATE' + beerInfo.beertime)
                                     
                                     var insertBeerSQL = "INSERT INTO `" + untappdTableName  + "` (beertime,venue,idx,name,brewery,style,ABV,IBU,rating,prices,beerLogoURL,beerUntappdURL,venueUntappdURL,venueUntappdLogoURL) VALUES ('" + beerInfo.beertime + "','" + beerInfo.venueNameFull + "','" + beerInfo.index + "','" + beerInfo.name + "','" + beerInfo.brewery + "','" + beerInfo.style + "','" + beerInfo.ABV + "','" + beerInfo.IBU + "','" + beerInfo.rating + "','" + beerInfo.prices + "','" + beerInfo.beerLogoURL + "','" + beerInfo.beerUntappdURL + "','" + beerInfo.venueUntappdURL + "','" + beerInfo.venueUntappdLogoURL  + "')";
             
@@ -497,7 +497,7 @@ var cleanupInstagram = function() {
             resolve({"result": "Finished instagram DB cleanup"});
 
         }).catch( err => {
-            logger.error('there was an error',err)
+            logger.error('there was an error getting instagram post: ' + err);
         });
     });
 };
@@ -536,7 +536,7 @@ var instagramByUser = function(user) {
                         for (i = 0; i < numInstagramPosts; i++) { 
                             var post = edges[i];
 
-                            logger.debug("post:",venue)
+                            //logger.debug("Found instagram post for: " + venue);
 
                             if (post && post.node.edge_media_to_caption.edges[0]) {
 
@@ -584,12 +584,12 @@ var instagramByUser = function(user) {
                                         //if there are no hits, add it
                                         if (rows.length === 0) {
 
-                                            //logger.debug("DATE",formatDate(item.date));
+                                            //logger.debug("DATE: " + formatDate(item.date));
     
                                             //write to database
                                             var insertPostSQL = "INSERT INTO `" + instagramTableName  + "` (beertime,user,venue,text,venueLogoURL,thumbnailURL,imageURL) VALUES ('" + formatDate(item.date) + "','" + item.user + "','" + item.venue + "','" + item.text + "','" + item.venueLogoURL + "','" + item.thumbnailURL + "','" + item.imageURL + "')";
     
-                                            //logger.debug('SQL', insertPostSQL);
+                                            //logger.debug('SQL: ' + insertPostSQL);
     
                                             connection.query(insertPostSQL, function(err, rows, fields){
                                                 if(!err){
@@ -660,7 +660,7 @@ var cleanupTwitter = function() {
             resolve({"result": "Finished twitter DB cleanup"});
 
         }).catch( err => {
-            logger.error('there was an error',err)
+            logger.error('there was an error getting twitter post: ' + err);
         });
     });
 };
@@ -670,13 +670,13 @@ var getTwitterByUser = function(user) {
     return new Promise(function(resolve, reject){
         if (!user) return reject(new Error('Argument "user" must be specified'));
     
-        //logger.debug('starting twitter scrape',user);
+        //logger.debug('starting twitter scrape: ' + user);
 
         //first get twitter profile so we can get user logo
         var twitterProfile = new scrapetwitter.getUserProfile(user);
         
         twitterProfile.then(function(profile){
-            //logger.debug('profile',profile);
+            //logger.debug('profile: ' + profile);
 
             //then get tweets
             var tweetData = [];
@@ -701,7 +701,7 @@ var getTwitterByUser = function(user) {
 
                     //exit loop if tweet is greater than days to expire
                     if (daysToExpire - daysBetween(todayDate,tweetDate) < 0) {
-                        logger.debug("Skipping old tweet from:", tweet.screenName);
+                        logger.debug("Skipping old tweet from: " + tweet.screenName);
                         callback(null);
                         return;
                     }
@@ -716,11 +716,10 @@ var getTwitterByUser = function(user) {
                             if (rows.length === 0) {
 
                                 //logger.debug('Need to add this tweet: ' + tweet.text);
-                                //logger.debug(tweet.time,new Date(tweet.time).toLocaleString(), formatDate(new Date(tweet.time)));
-
+      
                                 var insertTweetSQL = "INSERT INTO `" + twitterTableName  + "` (beertime,user,venue,text,userPhotoURL,imageURL) VALUES ('" + formatDate(tweetDate) + "','" + tweet.screenName + "','" + profile.name + "','" + tweet.text.replace("'","").replace("'","") + "','" + profile.profileImage + "','" + tweet.images[0] + "')";
 
-                                //logger.debug('SQL', insertTweetSQL)
+                                //logger.debug('SQL: ' + insertTweetSQL)
 
                                 connection.query(insertTweetSQL, function(err, rows, fields){
                                     if(!err){
@@ -781,7 +780,7 @@ cleanupInstagram().then(function(result){
             logger.info('Finished instagram user: ' + item + ' processed: ' + instagramCount);
         })
         .catch(function(err){
-            logger.error('there was an error');
+            logger.error('there was an error getting instagram posts: ' + err);
         });
     });
 });
@@ -800,7 +799,7 @@ cleanupUntappd().then(function(result){
             logger.info('Finished untapped venue: ' + item + ' processed: ' + untappdVenueCount);
         })
         .catch(function(err){
-            logger.error('there was an error');
+            logger.error('there was an error getting untappd venues: ' + err);
         });
     });
 
@@ -810,7 +809,7 @@ cleanupUntappd().then(function(result){
             logger.info('Finished untapped user: ' + item + ' processed: ' + untappdUserCount);
         })
         .catch(function(err){
-            logger.error('there was an error');
+            logger.error('there was an error getting untappd users: ' + err);
         });
     });
 });
@@ -828,7 +827,7 @@ cleanupTwitter().then(function(result){
             logger.info('Finished twitter user: ' + item + ' | processed so far: ' + twitterCount);
         })
         .catch(function(err){
-            logger.error('there was an error');
+            logger.error('there was an error getting twitter posts: ' + err);
         });
     });
 });
