@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npm run open && npm run server",
     "server": "node server.js",
-    "open": "start http://localhost:8080"
+    "open": "start http://localhost:8082"
   },
   "dependencies": {
     "async": "^2.6.0",

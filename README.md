@@ -154,7 +154,7 @@ Start up express server (stays running until CTRL-C):
 `node server.js`
 
 Open a browser on another computer/mobile device connected to the same network using the IP address found above as the URL ie.:
-`http://192.168.1.195:8080`
+`http://192.168.1.195:8082`
 
 ### Persistently start and keep the node/express server script running (optional):
 install pm2:  

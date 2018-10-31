@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var dbInfo     = require('./dbInfo.js');
 
 // Constants
-var PORT = 8080;
+var PORT = 8082;
 var HOST = '0.0.0.0';
 
 //need parser to read POST requests
@@ -33,9 +33,10 @@ app.get('/juice', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log('Request for juice data initiated by:',ip); 
 	var pool = mysql.createPool(dbInfo.data);
-    var untappdQuery = "SELECT * FROM untappd WHERE beertime > NOW() - INTERVAL 14 DAY";
+    var untappdQuery = "SELECT * FROM untappd WHERE beertime > NOW() - INTERVAL 3 DAY";
 	var instagramQuery = "SELECT * FROM instagram WHERE beertime > NOW() - INTERVAL 3 DAY";
-	var twitterQuery = "SELECT * FROM twitter WHERE beertime > NOW() - INTERVAL 3 DAY";
+    var twitterQuery = "SELECT * FROM twitter WHERE beertime > NOW() - INTERVAL 3 DAY";
+    var beermenusQuery = "SELECT * FROM beermenus WHERE beertime > NOW() - INTERVAL 3 DAY";
 
     var return_data = {};
 
@@ -55,12 +56,19 @@ app.get('/juice', function (req, res) {
            });
 	   },
 	   function(parallel_done) {
-		pool.query(twitterQuery, {}, function(err, results) {
-			if (err) return parallel_done(err);
-			return_data.twitter = results;
-			parallel_done();
-		});
-	}
+            pool.query(twitterQuery, {}, function(err, results) {
+                if (err) return parallel_done(err);
+                return_data.twitter = results;
+                parallel_done();
+            });
+       },
+	   function(parallel_done) {
+            pool.query(beermenusQuery, {}, function(err, results) {
+                if (err) return parallel_done(err);
+                return_data.beermenus = results;
+                parallel_done();
+            });
+	   }
     ], function(err) {
 		if (err) throw err;
          pool.end();

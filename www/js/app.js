@@ -130,6 +130,7 @@ function toggleVenues(data) {
   console.log(venue,checked,type)
 
   $('#data').find('.' + type + 'post').each(function (i, item) {
+    
     if ($(item).find('.' + type + 'venue').data('venue') === venue) {
       if (checked) $(item).show();
       else $(item).hide();
@@ -449,6 +450,37 @@ function getJuice() {
   
               //create post
               var postContent = '<div ' + display + ' class="juicepost untappdpost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="untappd-img-top card-img-top" data-src="' + post.beerLogoURL + '" data-url="' + post.beerUntappdURL + '" data-venue="' + post.venue + '" data-logo="' + post.venueUntappdLogoURL + '" data-time="' + post.beertime + '"><div class="card-block"> <venue class="profile untappdvenue" data-venue="' + post.venue + '">	<img src="' + post.venueUntappdLogoURL + '"  class="profile-avatar" alt=""> </venue> <h5 class="card-title mt-3"><a href="' + post.beerUntappdURL + '" target="_blank"><span id="beerName">' + post.name + '</span></a><span class="badge badge-warning rating ml-2">' + post.rating + '</span></h5><div class="modal-text" id="beerInfo"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div><div class="card-text"><a href="' + post.venueUntappdURL + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
+  
+              $('#data').append(postContent);
+            });
+          }
+
+          if (index === 'beermenus') {
+            $.each(value, function (index, post) {
+              //console.log('beermenus',post);
+  
+              if ($('#beermenusDiv').find('.beermenus-toggle').text().indexOf(post.venue) === -1) {
+                $('#beermenusDiv').append('<div class="ml-2 beermenus-toggle custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="beermenusCheck' + index + '" data-venue="' + post.venue + '" checked><label class="custom-control-label" for="beermenusCheck' + index + '">' + post.venue + '</label></div>');
+  
+                createGeoJSON(post);
+              }
+  
+              //take care of 'N/A' values
+              if (post.rating == 'N/A') {
+                post.rating = 0.00;
+              }
+  
+              //default filtering
+              var display = '';
+              if (parseFloat(post.rating) < parseFloat($('#ratingFilterValue').text())) {
+                //console.log('hiding',post.name);
+                display = 'style="display:none;"';
+              }
+  
+              post.text = $('<div id="beerInfo" class="meta"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div>').text();
+  
+              //create post
+              var postContent = '<div ' + display + ' class="juicepost beermenuspost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="untappd-img-top card-img-top" data-src="' + post.beerLogoURL + '" data-url="' + post.beerUntappdURL + '" data-venue="' + post.venue + '" data-logo="' + post.venueUntappdLogoURL + '" data-time="' + post.beertime + '"><div class="card-block"> <venue class="profile beermenusvenue" data-venue="' + post.venue + '">	<img src="' + post.beermenusLogoURL + '"  class="profile-avatar" alt=""> </venue> <h5 class="card-title mt-3"><a href="' + post.beerUntappdURL + '" target="_blank"><span id="beerName">' + post.name + '</span></a><span class="badge badge-warning rating ml-2">' + post.rating + '</span></h5><div class="modal-text" id="beerInfo"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div><div class="card-text"><a href="' + post.beermenusVenueURL + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
   
               $('#data').append(postContent);
             });
