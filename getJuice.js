@@ -177,8 +177,8 @@ var getBeermenusVenue = function(venue) {
                                 var options = {
                                     uri: untappdSearchURL,
                                     qs: {
-                                        q: beerInfo.beermenusname.toLowerCase().replace('ipa',''),
-                                        //q: 'industrial arts wrench ipa',
+                                        //remove ipa because causes untappd search issues
+                                        q: beerInfo.beermenusname.toLowerCase().replace(' ipa',''),
                                         type: 'beer'
                                     },
                                     headers: {

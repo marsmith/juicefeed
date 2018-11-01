@@ -334,19 +334,20 @@ function filterByUntappdRating(filterValue) {
   //console.log('filtering by rating');
 
   //then loop over checked untappd toggles
-  $('#untappdDiv.venueToggles input[type=checkbox]').each(function (i, checkbox) {
+  $('#untappdDiv.venueToggles input[type=checkbox], #beermenusDiv.venueToggles input[type=checkbox]').each(function (i, checkbox) {
+    //console.log('here',checkbox)
     var toggleVenue = $(this).data('venue');
     var checked = this.checked;
 
     //loop over untappd posts
-    $('#data').find('.untappdpost').each(function (i, item) {
-      var postVenue = $(item).find('.untappdvenue').data('venue');
+    $('#data').find('.untappdpost, .beermenuspost').each(function (i, item) {
+      var postVenue = $(item).find('.untappdvenue, .beermenusvenue').data('venue');
       var rating = parseFloat($(item).find('.rating').text().trim());
-      //console.log('rating',rating)
+      
       var beer = $(item).find('.card-title').text();
     
       if (postVenue === toggleVenue  && checked) {
-        
+        //console.log('rating',rating, postVenue, toggleVenue)
         if (rating < filterValue) {
           
           $(item).hide();
