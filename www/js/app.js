@@ -94,6 +94,9 @@ $(document).ready(function () {
 
   //refresh every 10 mins
   setInterval(function () { getJuice(); }, 600000);
+
+  //get untappd rating filter from cookie if exists
+  filterByUntappdRating(getCookie("untappdRatingFilter"));
 });
 
 function toggleView() {
@@ -331,7 +334,8 @@ function resetSearch() {
 
 function filterByUntappdRating(filterValue) {
 
-  //console.log('filtering by rating');
+  //set cookie with filter value
+  setCookie("untappdRatingFilter",filterValue,999);
 
   //then loop over checked untappd toggles
   $('#untappdDiv.venueToggles input[type=checkbox], #beermenusDiv.venueToggles input[type=checkbox]').each(function (i, checkbox) {
