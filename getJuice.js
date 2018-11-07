@@ -21,7 +21,7 @@ var beermenusURL = 'https://www.beermenus.com/places/';
 var numInstagramPosts = 5;
 var numTweets = 10;
 var dataExp = /window\._sharedData\s?=\s?({.+);<\/script>/;
-var daysToExpire = 14;
+var daysToExpire = 100;
 var twitterCount = 0;
 var untappdVenueCount = 0;
 var untappdUserCount = 0;

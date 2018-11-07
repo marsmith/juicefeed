@@ -7,12 +7,12 @@
 //
 // ----------------------------------------------------------------------------------------
 
-exports.instagramUsers = ['unifiedbeerworks','bloodville_brewery','singlecutnorth','craftbeercenter','troy_beverage','woodstockbrewing','burlingtonbeer','alchemistbeer','peekskillbrewery','rareformbrewco','fiddleheadbrewing','chathambrewing','druthersbrewing','commonrootsbrewing','paradoxbrewery','adirondackbrewery','suarezfamilybrewery','rootandbranchbrewing','foambrewers','hudsonvalleybrewery','mainebeerco','kcbcbeer','barrierbrewingco','singlecutbeer','otherhalfnyc','nightshiftbeer','bissellbrothers','industrialartsbrewing','lawsonsfinest','treehousebrewco','grimmales','licbeerproject','trilliumbrewing','finbackbrewery','eqbrewery','fobeerco','hillfarmstead','sloopbrewingco','albanyaleandoyster','oliversbeverage','westmerebeverage','beerbonestaproom','mohawktaproom','thecitybeerhall42','district96_beerco','4counties_beerco','delmarbeveragecenter','wearepintsized','sandcitybrewery','frost.beer.works','liquidlyricsbrewing','vanishedvalleybrewing'];
+exports.instagramUsers = ['sudwerkbrew','devicebrewing','threemilebrew'];
 
-exports.twitterUsers = ['bloodvillebrew','TreeHouseBrewCo','burlingtonbeer','riverroostvt','eqbrewery'];
+exports.twitterUsers = ['DeviceBrewing','sudwerkbrew','ThreeMileBrew'];
 
-exports.untappdVenues = ['towne-tavern/63590','troy-discount-beverage/385265', 'olivers-beverage-brew-crew/334214', 'westmere-beverage/58838', 'the-ruck/1797', 'pint-sized/5973790', 'delaware-supply/6894255', 'hill-street-cafe/70543','mohawk-taproom-and-grill/1749228','hunters-on-jay/2265376','hoosick-beverage-center/340342','elixir-16/6362949','the-black-bear-inn/305546','beer-bones-taproom/7454563','minogues-beverage-center/418856','minogues-beverage-center/448787','delmar-beverage/397052','nanola/1137569'];
+exports.untappdVenues = ['sudwerk-brewery/14665','three-mile-brewing-co/3318394'];
 
-exports.untappdUsers = ['AlbanyAleandOyster','FranklinAlleySocialClub'];
+exports.untappdUsers = ['SuperOwlBrewing','thehawdis','ArnulfOfMetz','badmagis','lpeezydos','georbenn','BeerOfTheMonth'];
 
-exports.beermenusVenues = ['55697-tipsy-moose-troy','36151-thruway-beverages'];
+exports.beermenusVenues = ['11450-sudwerk-brewing-company'];
