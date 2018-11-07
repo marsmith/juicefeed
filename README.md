@@ -94,7 +94,7 @@ get required software from package manager:
 `sudo apt-get install -y git mariadb-server ufw`
 
 Allow access to ports:  
-`sudo ufw allow 8080`  
+`sudo ufw allow 8082`  
 `sudo ufw allow 22`  
 
 Enable firewall:  
