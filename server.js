@@ -33,9 +33,9 @@ app.get('/juice', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log('Request for juice data initiated by:',ip); 
 	var pool = mysql.createPool(dbInfo.data);
-    var untappdQuery = "SELECT * FROM untappd WHERE beertime > NOW() - INTERVAL 5 DAY";
-	var instagramQuery = "SELECT * FROM instagram WHERE beertime > NOW() - INTERVAL 5 DAY";
-    var twitterQuery = "SELECT * FROM twitter WHERE beertime > NOW() - INTERVAL 5 DAY";
+    var untappdQuery = "SELECT * FROM untappd WHERE beertime > NOW() - INTERVAL 3 DAY";
+	var instagramQuery = "SELECT * FROM instagram WHERE beertime > NOW() - INTERVAL 3 DAY";
+    var twitterQuery = "SELECT * FROM twitter WHERE beertime > NOW() - INTERVAL 3 DAY";
     var beermenusQuery = "SELECT * FROM beermenus WHERE beertime > NOW() - INTERVAL 5 DAY";
 
     var return_data = {};
