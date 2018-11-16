@@ -344,13 +344,16 @@ var getUntappdMenu = function(venue) {
                 
                 //check for beers that dont have a number in first 3 characters
                 if ($beerDetailsH5.find('a').text().substring(0, 3).indexOf('.') != -1 && !isNaN($beerDetailsH5.find('a').text().charAt(0))) {
-                    beerInfo.name = $beerDetailsH5.find('a').text().split('.')[1].trim().replace(/'/g, '');
+                    //console.log("HERE",$beerDetailsH5.find('a').text().split('.').slice(1).join(''))
+                    beerInfo.name = $beerDetailsH5.find('a').text().split('.').slice(1).join('').trim().replace(/'/g, '');
                     beerInfo.index = parseInt($beerDetailsH5.find('a').text().split('.')[0]);
                 }
                 else {
                     beerInfo.name = $beerDetailsH5.find('a').text().trim().replace(/'/g, '');
                     beerInfo.index = 0;
                 }
+
+                //console.log(beerInfo.name,beerInfo.index)
 
                 beerInfo.beertime = formatDate(new Date());
                 beerInfo.beerLogoURL = $(beer).find('.beer-label').find('img').attr('src');
@@ -359,7 +362,7 @@ var getUntappdMenu = function(venue) {
                 beerInfo.IBU = beerDetails[1].replace('IBU','').trim();
                 beerInfo.brewery = beerDetails[2].trim().replace("'","");
                 beerInfo.style = $beerDetailsH5.find('em').text().replace("'","");
-                if ($beerDetailsH6.find('span').last().attr('class')) beerInfo.rating = (parseFloat($beerDetailsH6.find('span').last().attr('class').split('rating xsmall r')[1].trim())/100).toFixed(2);
+                if ($beerDetailsH6.find('span').last().attr('class')) beerInfo.rating = (parseFloat($beerDetailsH6.find('span').last().attr('class').split('rating xsmall  r')[1].trim())/100).toFixed(2);
                 else beerInfo.rating = 'N/A';
                 beerInfo.beerUntappdURL = 'https://untappd.com' + $beerDetailsH5.find('a').attr('href');
                 var prices = [];
