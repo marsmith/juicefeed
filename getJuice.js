@@ -202,7 +202,8 @@ var getBeermenusVenue = function(venue) {
     
                                     var beer = $('.results-container').find('.beer-item')[0];
 
-                                    beerInfo.rating = parseFloat($(beer).find('.rating').find('.num').text().replace(/\(|\)/g, ""));
+                                    //round rating to nearest 0.25 to match other ratings
+                                    beerInfo.rating = (Math.round(parseFloat($(beer).find('.rating').find('.num').text().replace(/\(|\)/g, "")) * 4) / 4).toFixed(2);
 
                                     beerInfo.name = $(beer).find('.name').text().trim().replace(/'/g, '');
                                     beerInfo.ABV = $(beer).find('.abv').text().replace('ABV','').trim();
@@ -627,7 +628,11 @@ var getUntappdUser = function(user) {
                                 //start request promise
                                 rp(options)
                                 .then(function ($) {
-                                    beerInfo.rating = parseFloat($('.details').find('.rating').find('.num').text().replace(/\(|\)/g, ""));
+                                    
+                                    //round rating to nearest 0.25 to match other ratings
+                                    beerInfo.rating = (Math.round(parseFloat($('.details').find('.rating').find('.num').text().replace(/\(|\)/g, "")) * 4) / 4).toFixed(2);
+                                    
+                                    //beerInfo.rating = parseFloat($('.details').find('.rating').find('.num').text().replace(/\(|\)/g, ""));
                                     beerInfo.ABV = $('.details').find('.abv').text().replace('ABV','').trim();
                                     beerInfo.IBU = $('.details').find('.ibu').text().replace(' IBU','').trim();
                                     if (beerInfo.IBU === 'No') beerInfo.IBU = 'N/A';
