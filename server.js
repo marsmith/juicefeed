@@ -36,7 +36,7 @@ app.get('/juice', function (req, res) {
     var untappdQuery = "SELECT * FROM untappd WHERE beertime > NOW() - INTERVAL 3 DAY";
 	var instagramQuery = "SELECT * FROM instagram WHERE beertime > NOW() - INTERVAL 3 DAY";
     var twitterQuery = "SELECT * FROM twitter WHERE beertime > NOW() - INTERVAL 3 DAY";
-    var beermenusQuery = "SELECT * FROM beermenus WHERE beertime > NOW() - INTERVAL 5 DAY";
+    var beermenusQuery = "SELECT * FROM beermenus WHERE beertime > NOW() - INTERVAL 10 DAY";
 
     var return_data = {};
 
