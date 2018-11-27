@@ -383,128 +383,128 @@ function getJuice() {
       console.log('response:',data);
 
       var result = data;
-      
-      //if (result.length > 0) {
 
-        $('#data').empty();
+      $('#data').empty();
 
-        $.each(result, function (index, value) {
-          console.log('now parsing:', index);
+      $.each(result, function (index, value) {
+        console.log('now parsing:', index);
 
-          if (index === 'instagram') {
-            $.each(value, function (index, post) {
-              //console.log('insta',post);
+        if (index === 'instagram') {
+          $.each(value, function (index, post) {
+            //console.log('insta',post);
 
-              //add toggle to filter modal
-              if ($('#instagramDiv').find('.instagram-toggle').text().indexOf(post.venue) === -1) {
-                $('#instagramDiv').append('<div class="ml-2 instagram-toggle custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="instaCheck' + index + '" data-venue="' + post.user + '" checked><label class="custom-control-label" for="instaCheck' + index + '">' + post.venue + '</label></div>');
-              }
+            //add toggle to filter modal
+            if ($('#instagramDiv').find('.instagram-toggle').text().indexOf(post.venue) === -1) {
+              $('#instagramDiv').append('<div class="ml-2 instagram-toggle custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="instaCheck' + index + '" data-venue="' + post.user + '" checked><label class="custom-control-label" for="instaCheck' + index + '">' + post.venue + '</label></div>');
+            }
 
-              //linkify hashtags and ats in post text
-              var newText = post.text.replace(/#(\w+)/g, "<a href='https://instagram.com/tags/$1' target='_blank'>$&</a>").replace(/@(\w+)/g, "<a href='https://instagram.com/$1' target='_blank'>$&</a>");
-  
-              //create post
-              var postContent = '<div class="juicepost instagrampost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="instagramImage card-img-top" data-src="' + post.thumbnailURL + '" data-fullSizeImageURL="' + post.imageURL + '" data-venue="' + post.user + '" data-logo="' + post.venueLogoURL + '" data-time="' + post.beertime + '"> <div class="card-block"> <user class="profile">	<img src="' + post.venueLogoURL + '" class="profile-avatar" alt=""> </user>  <div class="expander instagramvenue expando-text modal-text mt-3" data-venue="' + post.user + '"> ' + newText  + '</div> <div class="card-text"><a href="https://www.instagram.com/' + post.user + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
-  
-              $('#data').append($(postContent));
-  
-            });
-          }
+            //linkify hashtags and ats in post text
+            var newText = post.text.replace(/#(\w+)/g, "<a href='https://instagram.com/tags/$1' target='_blank'>$&</a>").replace(/@(\w+)/g, "<a href='https://instagram.com/$1' target='_blank'>$&</a>");
 
-          if (index === 'twitter') {
-            $.each(value, function (index, post) {
-              //console.log('twitter',post.imageURL);
+            //create post
+            var postContent = '<div class="juicepost instagrampost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="instagramImage card-img-top" data-src="' + post.thumbnailURL + '" data-fullSizeImageURL="' + post.imageURL + '" data-venue="' + post.user + '" data-logo="' + post.venueLogoURL + '" data-time="' + post.beertime + '"> <div class="card-block"> <user class="profile">	<img src="' + post.venueLogoURL + '" class="profile-avatar" alt=""> </user>  <div class="expander instagramvenue expando-text modal-text mt-3" data-venue="' + post.user + '"> ' + newText  + '</div> <div class="card-text"><a href="https://www.instagram.com/' + post.user + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
 
-              if (post.imageURL == 'undefined') post.imageURL = post.userPhotoURL;
-  
-              if ($('#twitterDiv').find('.twitter-toggle').text().indexOf(post.venue) === -1) {
-                $('#twitterDiv').append('<div class="ml-2 twitter-toggle custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="twitterCheck' + index + '" data-venue="' + post.user + '" checked><label class="custom-control-label" for="twitterCheck' + index + '">' + post.venue + '</label></div>');
-              }
-  
-              //create post
-              var postContent = '<div class="juicepost twitterpost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="twitterImage card-img-top" data-src="' + post.imageURL + '" data-fullSizeImageURL="' + post.imageURL + '" data-venue="' + post.user + '" data-logo="' + post.userPhotoURL + '" data-time="' + post.beertime + '"> <div class="card-block"> <user class="profile">	<img data-src="' + post.userPhotoURL + '" class="profile-avatar" alt=""> </user>  <div class="expander expando-text twittervenue modal-text mt-3" data-venue="' + post.user + '"> ' + post.text + '</div> <div class="card-text"><a href="https://www.twitter.com/' + post.user + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
-  
-              $('#data').append(postContent);
-  
-            });
-          }
-  
-          if (index === 'untappd') {
-            $.each(value, function (index, post) {
-              //console.log('untappd',post);
-  
-              if ($('#untappdDiv').find('.untappd-toggle').text().indexOf(post.venue) === -1) {
-                $('#untappdDiv').append('<div class="ml-2 untappd-toggle custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="untappdCheck' + index + '" data-venue="' + post.venue + '" checked><label class="custom-control-label" for="untappdCheck' + index + '">' + post.venue + '</label></div>');
-  
-                createGeoJSON(post);
-              }
-  
-              //take care of 'N/A' values
-              if (post.rating == 'N/A') {
-                post.rating = 0.00;
-              }
-  
-              //default filtering
-              var display = '';
-              if (parseFloat(post.rating) < parseFloat($('#ratingFilterValue').text())) {
-                //console.log('hiding',post.name);
-                display = 'style="display:none;"';
-              }
-  
-              post.text = $('<div id="beerInfo" class="meta"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div>').text();
-  
-              //create post
-              var postContent = '<div ' + display + ' class="juicepost untappdpost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="untappd-img-top card-img-top" data-src="' + post.beerLogoURL + '" data-url="' + post.beerUntappdURL + '" data-venue="' + post.venue + '" data-logo="' + post.venueUntappdLogoURL + '" data-time="' + post.beertime + '"><div class="card-block"> <venue class="profile untappdvenue" data-venue="' + post.venue + '">	<img src="' + post.venueUntappdLogoURL + '"  class="profile-avatar" alt=""> </venue> <h5 class="card-title mt-3"><a href="' + post.beerUntappdURL + '" target="_blank"><span id="beerName">' + post.name + '</span></a><span class="badge badge-warning rating ml-2">' + post.rating + '</span></h5><div class="modal-text" id="beerInfo"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div><div class="card-text"><a href="' + post.venueUntappdURL + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
-  
-              $('#data').append(postContent);
-            });
-          }
+            $('#data').append($(postContent));
 
-          if (index === 'beermenus') {
-            $.each(value, function (index, post) {
-              //console.log('beermenus',post);
-  
-              if ($('#beermenusDiv').find('.beermenus-toggle').text().indexOf(post.venue) === -1) {
-                $('#beermenusDiv').append('<div class="ml-2 beermenus-toggle custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="beermenusCheck' + index + '" data-venue="' + post.venue + '" checked><label class="custom-control-label" for="beermenusCheck' + index + '">' + post.venue + '</label></div>');
-  
-                createGeoJSON(post);
-              }
-  
-              //take care of 'N/A' values
-              if (post.rating == 'N/A') {
-                post.rating = 0.00;
-              }
-  
-              //default filtering
-              var display = '';
-              if (parseFloat(post.rating) < parseFloat($('#ratingFilterValue').text())) {
-                //console.log('hiding',post.name);
-                display = 'style="display:none;"';
-              }
-  
-              post.text = $('<div id="beerInfo" class="meta"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div>').text();
-  
-              //create post
-              var postContent = '<div ' + display + ' class="juicepost beermenuspost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="untappd-img-top card-img-top" data-src="' + post.beerLogoURL + '" data-url="' + post.beerUntappdURL + '" data-venue="' + post.venue + '" data-logo="' + post.venueUntappdLogoURL + '" data-time="' + post.beertime + '"><div class="card-block"> <venue class="profile beermenusvenue" data-venue="' + post.venue + '">	<img src="' + post.beermenusLogoURL + '"  class="profile-avatar" alt=""> </venue> <h5 class="card-title mt-3"><a href="' + post.beerUntappdURL + '" target="_blank"><span id="beerName">' + post.name + '</span></a><span class="badge badge-warning rating ml-2">' + post.rating + '</span></h5><div class="modal-text" id="beerInfo"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div><div class="card-text"><a href="' + post.beermenusVenueURL + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
-  
-              $('#data').append(postContent);
-            });
-          }
-        });
-  
-        //sort posts by date
-        $('#data .juicepost').sort(sortDescending).appendTo('#data');
+          });
+        }
 
-        //append IDs to date-ordered posts
-        $(".juicepost").each(function(){ 
-          postCount +=1;
-          $(this).attr('id','juiceIndex-' + postCount);
-        });
+        if (index === 'twitter') {
+          $.each(value, function (index, post) {
+            //console.log('twitter',post.imageURL);
 
-        //update lazy loader after everything is done
+            if (post.imageURL == 'undefined') post.imageURL = post.userPhotoURL;
+
+            if ($('#twitterDiv').find('.twitter-toggle').text().indexOf(post.venue) === -1) {
+              $('#twitterDiv').append('<div class="ml-2 twitter-toggle custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="twitterCheck' + index + '" data-venue="' + post.user + '" checked><label class="custom-control-label" for="twitterCheck' + index + '">' + post.venue + '</label></div>');
+            }
+
+            //create post
+            var postContent = '<div class="juicepost twitterpost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="twitterImage card-img-top" data-src="' + post.imageURL + '" data-fullSizeImageURL="' + post.imageURL + '" data-venue="' + post.user + '" data-logo="' + post.userPhotoURL + '" data-time="' + post.beertime + '"> <div class="card-block"> <user class="profile">	<img data-src="' + post.userPhotoURL + '" class="profile-avatar" alt=""> </user>  <div class="expander expando-text twittervenue modal-text mt-3" data-venue="' + post.user + '"> ' + post.text + '</div> <div class="card-text"><a href="https://www.twitter.com/' + post.user + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
+
+            $('#data').append(postContent);
+
+          });
+        }
+
+        if (index === 'untappd') {
+          $.each(value, function (index, post) {
+            //console.log('untappd',post);
+
+            if ($('#untappdDiv').find('.untappd-toggle').text().indexOf(post.venue) === -1) {
+              $('#untappdDiv').append('<div class="ml-2 untappd-toggle custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="untappdCheck' + index + '" data-venue="' + post.venue + '" checked><label class="custom-control-label" for="untappdCheck' + index + '">' + post.venue + '</label></div>');
+
+              createGeoJSON(post);
+            }
+
+            //take care of 'N/A' values
+            if (post.rating == 'N/A') {
+              post.rating = 0.00;
+            }
+
+            //default filtering
+            var display = '';
+            if (parseFloat(post.rating) < parseFloat($('#ratingFilterValue').text())) {
+              //console.log('hiding',post.name);
+              display = 'style="display:none;"';
+            }
+
+            post.text = $('<div id="beerInfo" class="meta"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div>').text();
+
+            //create post
+            var postContent = '<div ' + display + ' class="juicepost untappdpost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="untappd-img-top card-img-top" data-src="' + post.beerLogoURL + '" data-url="' + post.beerUntappdURL + '" data-venue="' + post.venue + '" data-logo="' + post.venueUntappdLogoURL + '" data-time="' + post.beertime + '"><div class="card-block"> <venue class="profile untappdvenue" data-venue="' + post.venue + '">	<img src="' + post.venueUntappdLogoURL + '"  class="profile-avatar" alt=""> </venue> <h5 class="card-title mt-3"><a href="' + post.beerUntappdURL + '" target="_blank"><span id="beerName">' + post.name + '</span></a><span class="badge badge-warning rating ml-2">' + post.rating + '</span></h5><div class="modal-text" id="beerInfo"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div><div class="card-text"><a href="' + post.venueUntappdURL + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
+
+            $('#data').append(postContent);
+          });
+        }
+
+        if (index === 'beermenus') {
+          $.each(value, function (index, post) {
+            //console.log('beermenus',post);
+
+            if ($('#beermenusDiv').find('.beermenus-toggle').text().indexOf(post.venue) === -1) {
+              $('#beermenusDiv').append('<div class="ml-2 beermenus-toggle custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="beermenusCheck' + index + '" data-venue="' + post.venue + '" checked><label class="custom-control-label" for="beermenusCheck' + index + '">' + post.venue + '</label></div>');
+
+              createGeoJSON(post);
+            }
+
+            //take care of 'N/A' values
+            if (post.rating == 'N/A') {
+              post.rating = 0.00;
+            }
+
+            //default filtering
+            var display = '';
+            if (parseFloat(post.rating) < parseFloat($('#ratingFilterValue').text())) {
+              //console.log('hiding',post.name);
+              display = 'style="display:none;"';
+            }
+
+            post.text = $('<div id="beerInfo" class="meta"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div>').text();
+
+            //create post
+            var postContent = '<div ' + display + ' class="juicepost beermenuspost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="untappd-img-top card-img-top" data-src="' + post.beerLogoURL + '" data-url="' + post.beerUntappdURL + '" data-venue="' + post.venue + '" data-logo="' + post.venueUntappdLogoURL + '" data-time="' + post.beertime + '"><div class="card-block"> <venue class="profile beermenusvenue" data-venue="' + post.venue + '">	<img src="' + post.beermenusLogoURL + '"  class="profile-avatar" alt=""> </venue> <h5 class="card-title mt-3"><a href="' + post.beerUntappdURL + '" target="_blank"><span id="beerName">' + post.name + '</span></a><span class="badge badge-warning rating ml-2">' + post.rating + '</span></h5><div class="modal-text" id="beerInfo"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div><div class="card-text"><a href="' + post.beermenusVenueURL + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
+
+            $('#data').append(postContent);
+          });
+        }
+
+        //update lazy loader after each item
         ll.update();
+      });
 
-      //}
+      //sort posts by date
+      $('#data .juicepost').sort(sortDescending).appendTo('#data');
+
+      //append IDs to date-ordered posts
+      $(".juicepost").each(function(){ 
+        postCount +=1;
+        $(this).attr('id','juiceIndex-' + postCount);
+      });
+
+      //update lazy loader after everything is done
+      ll.update();
+
     }
   });
 }
