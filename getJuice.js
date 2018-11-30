@@ -122,12 +122,16 @@ var getBeermenusVenue = function(venue) {
             var venueLogoURL = 'https://www.beermenus.com/assets/sprites/logo.png';
             var venueBeerMenusURL = beermenusURL + venue;
 
-            console.log("TEST",venueNameFull)
+            //console.log("TEST",venueNameFull)
    
             var connection = mysql.createConnection(dbInfo.data);
 
             var beerList = [];
             $('#featured').find('li').each(function(i,beer){
+                beerList.push(beer);
+            });
+
+            $('#on_tap').find('li').each(function(i,beer){
                 beerList.push(beer);
             });
                     
