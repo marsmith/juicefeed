@@ -15,4 +15,4 @@ exports.untappdVenues = ['towne-tavern/63590','troy-discount-beverage/385265', '
 
 exports.untappdUsers = ['AlbanyAleandOyster','FranklinAlleySocialClub'];
 
-exports.beermenusVenues = ['55697-tipsy-moose-troy','36151-thruway-beverages'];
+exports.beermenusVenues = ['55697-tipsy-moose-troy','36151-thruway-beverages','2901-the-city-beer-hall','46920-lost-found'];
