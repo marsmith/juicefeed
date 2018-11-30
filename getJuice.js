@@ -114,7 +114,6 @@ var getBeermenusVenue = function(venue) {
         rp(options)
         .then(function ($) {
             var beerInfos = [];
-            var testBeerInfos;
 
             //get venue details
             var venueNameFull = $('.info-wrap').find('h1').text().trim().replace("'","");
@@ -150,7 +149,7 @@ var getBeermenusVenue = function(venue) {
 
                 beerInfo.prices = $(beer).find('.beer-servings').find('p').text().trim();
                 
-                //console.log(beerInfo);
+                console.log(beerInfo);
 
                 beerInfos.push(beerInfo);
 
