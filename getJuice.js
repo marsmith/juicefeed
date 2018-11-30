@@ -121,6 +121,8 @@ var getBeermenusVenue = function(venue) {
             var venueAddress = $('span.pure-icon.pure-icon-map-alt.text-blue').parent().text().trim();
             var venueLogoURL = 'https://www.beermenus.com/assets/sprites/logo.png';
             var venueBeerMenusURL = beermenusURL + venue;
+
+            console.log("TEST",venueNameFull)
    
             var connection = mysql.createConnection(dbInfo.data);
 
@@ -139,6 +141,7 @@ var getBeermenusVenue = function(venue) {
                 beerInfo.beermenusLogoURL = venueLogoURL;
                 
 
+
                 beerInfo.beermenusname = $(beer).find('h3').text().trim().replace(/'/g, '');
                 var beerTemp = $(beer).find('p.text-gray').text().split('·');
                 if (beerTemp.length === 3) {
@@ -149,7 +152,7 @@ var getBeermenusVenue = function(venue) {
 
                 beerInfo.prices = $(beer).find('.beer-servings').find('p').text().trim();
                 
-                console.log(beerInfo);
+                //console.log(beerInfo);
 
                 beerInfos.push(beerInfo);
 
