@@ -168,12 +168,16 @@ function getNeighborPost(id,direction) {
 
 function openModal(id) {
 
+  console.log('open modal:',id,$('#' + id).find('.card-title').html())
+
   var data = $('#' + id).find('.card-img-top');
 
   //check if this is an untappd item click
   if ($(data).attr('class').indexOf('untappd-img-top') != -1) {
-    $('#unifiedBodyTop').html('<iframe src="' + $(data).data('url') + '" id="untappdIframe" style="zoom:0.60" frameborder="0" width="99.6%"></iframe>'); 
-    $('#untappdIframe').attr("height", $('#unifiedModal').height());   
+    // $('#unifiedBodyTop').html('<iframe src="' + $(data).data('url') + '" id="untappdIframe" style="zoom:0.60" frameborder="0" width="99.6%"></iframe>'); 
+    // $('#untappdIframe').attr("height", $('#unifiedModal').height());   
+
+    $('#unifiedBodyTop').html('<img class="card-img-top untappd-img" src="' + $(data).data('src') + '" id="unifiedImage" style=""></img>');
   }
 
   //otherwise assume instagram or twitter
@@ -183,7 +187,22 @@ function openModal(id) {
   
   $('#unifiedTitle').text($(data).data('venue'));
   $('#unifiedLogo').attr('src', $(data).data('logo'));
-  $('#unifiedBodyBottom').html('<p>' + $('#' + id).find('.modal-text').html() + '</p>');
+
+  //if its an untappd post add the beer name and rating
+  if ($('#' + id).hasClass('untappdpost')) {
+    $('#unifiedBodyBottom').html('<h5>' + $('#' + id).find('.card-title').html() + '</h5>');
+    $('#unifiedBodyBottom').append('<p>' + $('#' + id).find('.modal-text').html() + '</p>');
+    $('#unifiedBodyBottom').append('<p>' + $('#' + id).find('.card-text').html() + '</p>');
+  }
+
+  else {
+    $('#unifiedBodyBottom').html('<p>' + $('#' + id).find('.modal-text').html() + '</p>');
+    $('#unifiedBodyBottom').append('<p>' + $('#' + id).find('.card-text').html() + '</p>');
+  }
+
+
+
+  // $('#unifiedBodyBottom').append('<span id="beerName">' + $(data).data('name') + '</span></a><span class="badge badge-warning rating ml-2">' + $(data).data('rating') + '</span>');
   $('#unifiedFooter').html('<small class="time" data-time="' + $(data).data('time') + '"> Posted: ' + timeSince(new Date($(data).data('time'))) + ' ago</small>');
   $('#unifiedModal').modal('show'); 
 
@@ -452,7 +471,7 @@ function getJuice() {
             post.text = $('<div id="beerInfo" class="meta"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div>').text();
 
             //create post
-            var postContent = '<div ' + display + ' class="juicepost untappdpost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="untappd-img-top card-img-top" data-src="' + post.beerLogoURL + '" data-url="' + post.beerUntappdURL + '" data-venue="' + post.venue + '" data-logo="' + post.venueUntappdLogoURL + '" data-time="' + post.beertime + '"><div class="card-block"> <venue class="profile untappdvenue" data-venue="' + post.venue + '">	<img src="' + post.venueUntappdLogoURL + '"  class="profile-avatar" alt=""> </venue> <h5 class="card-title mt-3"><a href="' + post.beerUntappdURL + '" target="_blank"><span id="beerName">' + post.name + '</span></a><span class="badge badge-warning rating ml-2">' + post.rating + '</span></h5><div class="modal-text" id="beerInfo"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div><div class="card-text"><a href="' + post.venueUntappdURL + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
+            var postContent = '<div ' + display + ' class="juicepost untappdpost col-6 col-md-4 col-lg-2 mt-4"> <div class="card"> <img class="untappd-img-top card-img-top" data-src="' + post.beerLogoURL + '" data-url="' + post.beerUntappdURL + '" data-venue="' + post.venue + '" data-logo="' + post.venueUntappdLogoURL + '" data-time="' + post.beertime + '" data-name="' + post.name + '" data-rating="' + post.rating + '"><div class="card-block"> <venue class="profile untappdvenue" data-venue="' + post.venue + '">	<img src="' + post.venueUntappdLogoURL + '"  class="profile-avatar" alt=""> </venue> <h5 class="card-title mt-3"><a href="' + post.beerUntappdURL + '" target="_blank"><span id="beerName">' + post.name + '</span></a><span class="badge badge-warning rating ml-2">' + post.rating + '</span></h5><div class="modal-text" id="beerInfo"><div id="beerBrewery"> ' + post.brewery + '</div> <div id="beerStyle"> ' + post.style + '</div> <div id="beerABVIBU"> ' + post.ABV + ' ABV • ' + post.IBU + ' IBU</div> <div id="beerPrice"> ' + post.prices.replace(/USD/g, '').split('|').join(' </br> ') + '</div> </div><div class="card-text"><a href="' + post.venueUntappdURL + '" target="_blank">' + post.venue + '</a></div> </div> <div class="card-footer">	<small class="time" data-time="' + post.beertime + '"> Posted: ' + timeSince(new Date(post.beertime)) + ' ago</small> </div>	</div> </div>';
 
             $('#data').append(postContent);
           });
