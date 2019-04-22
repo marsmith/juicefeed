@@ -143,8 +143,6 @@ var getBeermenusVenue = function(venue) {
                 beerInfo.venueAddress = venueAddress;
                 beerInfo.beermenusVenueURL = venueBeerMenusURL;
                 beerInfo.beermenusLogoURL = venueLogoURL;
-                
-
 
                 beerInfo.beermenusname = $(beer).find('h3').text().trim().replace(/'/g, '');
                 var beerTemp = $(beer).find('p.text-gray').text().split('·');
@@ -235,7 +233,7 @@ var getBeermenusVenue = function(venue) {
                                     });
                                 })
                                 .catch(function (err) {
-                                    logger.error('There was an error getting the user from beermenus for: ' + venue);
+                                    logger.error('There was an error looking up beermenus.com beer in untappd for: ' + venue);
                                 });
                             }
                             //otherwise 
