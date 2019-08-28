@@ -999,30 +999,30 @@ cleanupInstagram().then(function(result){
 });
 
 //Untappd
-cleanupUntappd().then(function(result){
-    logger.info(result.result);
-    logger.info('Starting untappd processing...');
+// cleanupUntappd().then(function(result){
+//     logger.info(result.result);
+//     logger.info('Starting untappd processing...');
 
-    if (config.untappdVenues) config.untappdVenues.forEach(function (item) {
-        getUntappdMenu(item).then(function(result){
-            untappdVenueCount +=1;
-            logger.info('Finished untapped venue: ' + item + ' processed: ' + untappdVenueCount);
-        })
-        .catch(function(err){
-            logger.error('there was an error getting untappd venues: ' + err);
-        });
-    });
+//     if (config.untappdVenues) config.untappdVenues.forEach(function (item) {
+//         getUntappdMenu(item).then(function(result){
+//             untappdVenueCount +=1;
+//             logger.info('Finished untapped venue: ' + item + ' processed: ' + untappdVenueCount);
+//         })
+//         .catch(function(err){
+//             logger.error('there was an error getting untappd venues: ' + err);
+//         });
+//     });
 
-    if (config.untappdUsers) config.untappdUsers.forEach(function (item) {
-        getUntappdUser(item).then(function(result){
-            untappdUserCount +=1;
-            logger.info('Finished untapped user: ' + item + ' processed: ' + untappdUserCount);
-        })
-        .catch(function(err){
-            logger.error('there was an error getting untappd users: ' + err);
-        });
-    });
-});
+//     if (config.untappdUsers) config.untappdUsers.forEach(function (item) {
+//         getUntappdUser(item).then(function(result){
+//             untappdUserCount +=1;
+//             logger.info('Finished untapped user: ' + item + ' processed: ' + untappdUserCount);
+//         })
+//         .catch(function(err){
+//             logger.error('there was an error getting untappd users: ' + err);
+//         });
+//     });
+// });
 
 //Twitter
 cleanupTwitter().then(function(result){
