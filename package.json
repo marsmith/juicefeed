@@ -12,7 +12,10 @@
     "open": "start http://localhost:8082"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "async": "^3.1.0",
+    "express": "^4.16.3",
+    "express-http-proxy": "^1.6.0",
+    "request": "^2.88.0"
   },
   "devDependencies": {}
 }
