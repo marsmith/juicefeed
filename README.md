@@ -1,7 +1,7 @@
 
 # juicefeed
 
-The following info is a guide to setting up a basic node.js/express web server on a raspberry pi.  A database will be created and populated with juice info from a cron script run every 15 minutes.  Additionally, an express server will be installed that hosts a static web page (Juice Feed) which queries the aforementioned database for juice infos and displays chronologically sorted, filterable juice info cards.
+The following info is a guide to setting up a basic node.js/express web server on a raspberry pi.  UPDATE: database removed after bans from website.  Additionally, an express server will be installed that hosts a static web page (Juice Feed) which queries the aforementioned database for juice infos and displays chronologically sorted, filterable juice info cards.
 
 ![Screen Shot](https://image.ibb.co/nqrZOA/Capture.png)
 
@@ -103,25 +103,6 @@ Enable firewall:
 Install latest node.js for your version of raspberry pi:  
 `wget -O - https://raw.githubusercontent.com/audstanley/NodeJs-Raspberry-Pi/master/Install-Node.sh | sudo bash`
 
-### mariadb setup
-create new database user and set password.  This needs to be done using 'root':   
-`sudo mysql -u root`  
-
-you are now at the mysql prompt.  Now create the user and grant all privileges (replace 'hawdis' and 'abc123'):  
-```GRANT ALL PRIVILEGES ON *.* TO 'hawdis'@'localhost' IDENTIFIED BY 'abc123';``` 
-
-quit mysql:  
-`\q`  
-
-log back in as your new user:  
-```mysql -u hawdis -p```  
-
-create new database:  
-```CREATE DATABASE juicedb;```  
-
-quit mysql:  
-`\q`  
-
 ### install and configure juicefeed app 
 clone from github:  
 `git clone https://github.com/marsmith/juicefeed`
@@ -132,24 +113,7 @@ enter project folder:
 install npm dependencies:   
 `npm install`
 
-Edit dbInfo.js file with your user credentials
-`nano dbInfo.js`  
-
-Edit config file and replace juice venue values as needed.  This will configure your custom version of the juicefeed to suit your needs.  
-`nano config.js`  
-
-setup up cron jobs.  cron is a special file that will execute tasks at a predefined interval.  
-`crontab -e`  Choose your editor of choice, I like nano.
-
-The entry below will run the 'getJuice.js' node script every 15 minutes to pull new juice data.  Enter this on an empty line, where 'hawdis' is your username/home directory:  
-```
-*/15 * * * * /usr/bin/node /home/hawdis/juicefeed/getJuice.js
-```
-
 ### Test your new juicefeed server  
-Run script manually for the first time at debug log level, check console log for errors:  
-`node getJuice.js debug`
-
 Start up express server (stays running until CTRL-C):  
 `node server.js`
 
@@ -167,35 +131,3 @@ start pm2 (replace 'hawdis' with your username/home directory):
 `pm2 start /home/hawdis/juicefeed/server.js`  
 `pm2 startup`  
 `sudo env PATH=$PATH:/opt/nodejs/bin /opt/nodejs/lib/node_modules/pm2/bin/pm2 startup systemd -u hawdis --hp /home/hawdis`  
-
-### FOR DEVELOPMENT: Use Window Subsystem for linux for database:
-Install ubuntu 16.04 and install [here](https://aka.ms/wsl-ubuntu-1604/)
-
-Start ubuntu from start menu, create user and password
-
-Update ubuntu:  
-`sudo apt-get update` then `sudo apt-get upgrade`
-
-Get required software from package manager:  
-`sudo apt-get install -y mariadb-server`
-
-Start mariaDB server:
-`sudo service mysql start`
-
-create new database user and set password.  This needs to be done using 'root':   
-`sudo mysql -u root`  
-
-you are now at the mysql prompt.  Now create the user and grant all privileges (replace 'hawdis' and 'abc123'):  
-```GRANT ALL PRIVILEGES ON *.* TO 'hawdis'@'localhost' IDENTIFIED BY 'abc123';``` 
-
-quit mysql:  
-`\q`  
-
-log back in as your new user:  
-```mysql -u hawdis -p```  
-
-create new database:  
-```CREATE DATABASE juicedb;```  
-
-quit mysql:  
-`\q`  
