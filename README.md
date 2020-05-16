@@ -52,7 +52,7 @@ edit IP configuration file: `sudo nano /etc/dhcpcd.conf` add the following to th
 #static IP configuration 
 
 interface eth0
-static ip_address=192.168.50.50/24 
+static ip_address=192.168.50.60/24 
 static routers=192.168.50.1 
 static domain_name_servers=192.168.50.1
 ```
@@ -66,7 +66,7 @@ Get your pi's IP address, record the IP address from the following command:
 ## Use SSH for remaining configuration steps
 
 Using your SSH client, enter the IP address found above to connect to your Pi:  
-`ssh pi@192.168.1.195`
+`ssh pi@192.168.50.60`
 
 ### Create a new user
 
