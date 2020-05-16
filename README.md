@@ -90,8 +90,11 @@ Delete 'pi' user:
 Update rasbian:  
 `sudo apt-get update` then `sudo apt-get upgrade`
 
+Install latest node.js source for your version of raspberry pi:  
+`curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -`
+
 get required software from package manager:  
-`sudo apt-get install -y git mariadb-server ufw`
+`sudo apt-get install -y git ufw nodejs`
 
 Allow access to ports:  
 `sudo ufw allow 8082`  
@@ -99,9 +102,6 @@ Allow access to ports:
 
 Enable firewall:  
 `sudo ufw enable`  
-
-Install latest node.js for your version of raspberry pi:  
-`wget -O - https://raw.githubusercontent.com/audstanley/NodeJs-Raspberry-Pi/master/Install-Node.sh | sudo bash`
 
 ### install and configure juicefeed app 
 clone from github:  
@@ -124,10 +124,5 @@ Open a browser on another computer/mobile device connected to the same network u
 install pm2:  
 `sudo npm install pm2 -g`
 
-create symlink for pm2 to enable user run:  
-`sudo ln -s /opt/nodejs/bin/pm2 /usr/bin/pm2`
-
 start pm2 (replace 'hawdis' with your username/home directory):  
 `pm2 start /home/hawdis/juicefeed/server.js`  
-`pm2 startup`  
-`sudo env PATH=$PATH:/opt/nodejs/bin /opt/nodejs/lib/node_modules/pm2/bin/pm2 startup systemd -u hawdis --hp /home/hawdis`  
