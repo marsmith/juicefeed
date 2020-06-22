@@ -115,7 +115,7 @@ install npm dependencies:
 
 ### Test your new juicefeed server  
 Start up express server (stays running until CTRL-C):  
-`node server.js`
+`node juice-server.js`
 
 Open a browser on another computer/mobile device connected to the same network using the IP address found above as the URL ie.:
 `http://192.168.1.195:8082`
@@ -125,4 +125,4 @@ install pm2:
 `sudo npm install pm2 -g`
 
 start pm2 (replace 'hawdis' with your username/home directory):  
-`pm2 start /home/hawdis/juicefeed/server.js`  
+`pm2 start /home/hawdis/juicefeed/juice-server.js`  
